@@ -1,6 +1,8 @@
 package com.os.toolrentalmanagement.service;
 
+import java.time.LocalDate;
+
 public interface NoChargeDay {
-	boolean isFallInHoliday();
-	boolean isFallInWeekend();
+	boolean isFallInHoliday(LocalDate checkoutDate, Integer rentalDay);
+	boolean isFallInWeekend(LocalDate checkoutDate, Integer rentalDay);
 }
