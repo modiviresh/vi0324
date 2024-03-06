@@ -62,7 +62,7 @@ class ToolrentalmanagementApplicationTests {
 		mockMvc.perform(MockMvcRequestBuilders.post("/tool/rent/calculatecheckout")
 												.contentType(MediaType.APPLICATION_JSON)
 												.content(objectMapper.writeValueAsString(checkoutRequest))
-						).andExpect(status().is2xxSuccessful());
+						).andExpect(status().isOk());
 //		Assertions.assertEquals(1, productRepository.findAll().size());
 	}
 
@@ -72,7 +72,7 @@ class ToolrentalmanagementApplicationTests {
 		mockMvc.perform(MockMvcRequestBuilders.post("/tool/rent/calculatecheckout")
 												.contentType(MediaType.APPLICATION_JSON)
 												.content(objectMapper.writeValueAsString(checkoutRequest))
-						).andExpect(status().is2xxSuccessful());
+						).andExpect(status().isOk());
 //		Assertions.assertEquals(1, productRepository.findAll().size());
 	}
 	
@@ -82,7 +82,7 @@ class ToolrentalmanagementApplicationTests {
 		mockMvc.perform(MockMvcRequestBuilders.post("/tool/rent/calculatecheckout")
 												.contentType(MediaType.APPLICATION_JSON)
 												.content(objectMapper.writeValueAsString(checkoutRequest))
-						).andExpect(status().is2xxSuccessful());
+						).andExpect(status().isOk());
 //		Assertions.assertEquals(1, productRepository.findAll().size());
 	}
 	
@@ -92,7 +92,7 @@ class ToolrentalmanagementApplicationTests {
 		mockMvc.perform(MockMvcRequestBuilders.post("/tool/rent/calculatecheckout")
 												.contentType(MediaType.APPLICATION_JSON)
 												.content(objectMapper.writeValueAsString(checkoutRequest))
-						).andExpect(status().is2xxSuccessful());
+						).andExpect(status().isOk());
 //		Assertions.assertEquals(1, productRepository.findAll().size());
 	}
 	
@@ -102,7 +102,7 @@ class ToolrentalmanagementApplicationTests {
 		mockMvc.perform(MockMvcRequestBuilders.post("/tool/rent/calculatecheckout")
 												.contentType(MediaType.APPLICATION_JSON)
 												.content(objectMapper.writeValueAsString(checkoutRequest))
-						).andExpect(status().is2xxSuccessful());
+						).andExpect(status().isOk());
 //		Assertions.assertEquals(1, productRepository.findAll().size());
 	}
 	private CheckoutRequest getCheckoutRequestJAKRTest1() {
