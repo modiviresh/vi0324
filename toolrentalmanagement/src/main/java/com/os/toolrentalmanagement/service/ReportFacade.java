@@ -1,5 +1,6 @@
 package com.os.toolrentalmanagement.service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.os.toolrentalmanagement.component.MessageTranslator;
 import com.os.toolrentalmanagement.dto.CheckoutDTO;
+import com.os.toolrentalmanagement.utils.DateUtil;
 
 @Service
 public class ReportFacade {
@@ -34,15 +36,15 @@ public class ReportFacade {
 		fieldMap.put(MessageTranslator.getMessage("label.tool_brand"), checkoutDTO.getToolDetail().getBrandType().getBrandName());
 		fieldMap.put(MessageTranslator.getMessage("label.rental_days"), checkoutDTO.getRentalDay());
 		
-		fieldMap.put(MessageTranslator.getMessage("label.checkout.date"), checkoutDTO.getCheckoutDate());
-		fieldMap.put(MessageTranslator.getMessage("label.due_date"), checkoutDTO.getDueDate());
+		fieldMap.put(MessageTranslator.getMessage("label.checkout.date"), checkoutDTO.getCheckoutDate().format(DateTimeFormatter.ofPattern(DateUtil.STANDARD_PATTERN)));
+		fieldMap.put(MessageTranslator.getMessage("label.due_date"), checkoutDTO.getDueDate().format(DateTimeFormatter.ofPattern(DateUtil.STANDARD_PATTERN)));
 		fieldMap.put(MessageTranslator.getMessage("label.daily.rental.charge"), "$"+checkoutDTO.getDailyCharge());
 		
 		fieldMap.put(MessageTranslator.getMessage("label.charge_days"), checkoutDTO.getChargeDay());
-		fieldMap.put(MessageTranslator.getMessage("label.prediscount.charge"), checkoutDTO.getPreDiscountCharge());
+		fieldMap.put(MessageTranslator.getMessage("label.prediscount.charge"), "$"+checkoutDTO.getPreDiscountCharge());
 		fieldMap.put(MessageTranslator.getMessage("label.discount.percent"), checkoutDTO.getDiscountPer()+"%");
-		fieldMap.put(MessageTranslator.getMessage("label.discount.amount"), checkoutDTO.getDiscountAmount());
-		fieldMap.put(MessageTranslator.getMessage("label.final.charge"), checkoutDTO.getFinalCharge());
+		fieldMap.put(MessageTranslator.getMessage("label.discount.amount"), "$"+checkoutDTO.getDiscountAmount());
+		fieldMap.put(MessageTranslator.getMessage("label.final.charge"), "$"+checkoutDTO.getFinalCharge());
 		
 		return fieldMap;
 	}

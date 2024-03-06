@@ -2,6 +2,7 @@ package com.os.toolrentalmanagement.dto;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.os.toolrentalmanagement.model.ToolDetail;
 
 import lombok.Builder;
@@ -15,6 +16,7 @@ public class CheckoutDTO {
 
 	private ToolDetail toolDetail;
 
+	@JsonFormat(pattern = "MM/dd/yy")
 	private LocalDate checkoutDate;
 	
 	private Float dailyCharge;
@@ -27,6 +29,7 @@ public class CheckoutDTO {
 
 	private Integer discountPer;
 
+	@JsonFormat(pattern = "MM/dd/yy")
 	private LocalDate dueDate;
 	
 	private Integer chargeDay;

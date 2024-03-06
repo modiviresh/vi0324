@@ -1,10 +1,9 @@
 package com.os.toolrentalmanagement.payload.request;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.hibernate.validator.constraints.Range;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,8 +22,7 @@ public class CheckoutRequest {
 	private String toolCode;
 
 	@NotNull(message = "{error.checkoutDate.empty}")
-//	@DateTimeFormat(pattern = "MM/dd/yy")
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "MM/dd/yy")
 	private LocalDate checkoutDate;
 	
 	@NotNull(message = "{error.rentalDay.empty}")

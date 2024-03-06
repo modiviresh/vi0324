@@ -7,6 +7,8 @@ import com.os.toolrentalmanagement.constant.AppConstant;
 
 public class DateUtil {
 
+	public static final String STANDARD_PATTERN = "MM/dd/yy";
+
 	public static LocalDate IndependenceDayObserved (LocalDate labourDate) {
 		int nYear=labourDate.getYear();
 		
