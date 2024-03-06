@@ -21,6 +21,13 @@ import lombok.extern.slf4j.Slf4j;
 @ControllerAdvice
 public class ExceptionHandlerController {
 
+	@ExceptionHandler(ClassifiedException.class)
+	ResponseEntity<ErrorResponse> handleClassifiedException(HttpServletRequest req, ClassifiedException ex){
+		return ResponseEntity
+				.status(ex.getError().getStatus())
+				.body(ex.getErrorMessageObject(req.getRequestURL().toString()));
+	}
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(HttpServletRequest req, MethodArgumentNotValidException ex){
 

@@ -3,18 +3,13 @@ package com.os.toolrentalmanagement.service;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import com.os.toolrentalmanagement.component.MessageTranslator;
 import com.os.toolrentalmanagement.dto.CheckoutDTO;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class ReportFacade {
-
-	private final MessageSource messageSource; 
 
 	public void generateReport(ReportTypes reportType, CheckoutDTO checkoutDTO) {
 		switch (reportType) {
@@ -34,20 +29,20 @@ public class ReportFacade {
 	
 	private Map<String, Object> getAllFieldName(CheckoutDTO checkoutDTO) {
 		Map<String, Object> fieldMap = new LinkedHashMap<>();
-		fieldMap.put(messageSource.getMessage("label.tool_code", null, null), checkoutDTO.getToolDetail().getToolCode());
-		fieldMap.put(messageSource.getMessage("label.tool_type", null, null), checkoutDTO.getToolDetail().getToolType().getTypeName());
-		fieldMap.put(messageSource.getMessage("label.tool_brand", null, null), checkoutDTO.getToolDetail().getBrandType().getBrandName());
-		fieldMap.put(messageSource.getMessage("label.rental_days", null, null), checkoutDTO.getRentalDay());
+		fieldMap.put(MessageTranslator.getMessage("label.tool_code"), checkoutDTO.getToolDetail().getToolCode());
+		fieldMap.put(MessageTranslator.getMessage("label.tool_type"), checkoutDTO.getToolDetail().getToolType().getTypeName());
+		fieldMap.put(MessageTranslator.getMessage("label.tool_brand"), checkoutDTO.getToolDetail().getBrandType().getBrandName());
+		fieldMap.put(MessageTranslator.getMessage("label.rental_days"), checkoutDTO.getRentalDay());
 		
-		fieldMap.put(messageSource.getMessage("label.checkout.date", null, null), checkoutDTO.getCheckoutDate());
-		fieldMap.put(messageSource.getMessage("label.due_date", null, null), checkoutDTO.getDueDate());
-		fieldMap.put(messageSource.getMessage("label.daily.rental.charge", null, null), "$"+checkoutDTO.getDailyCharge());
+		fieldMap.put(MessageTranslator.getMessage("label.checkout.date"), checkoutDTO.getCheckoutDate());
+		fieldMap.put(MessageTranslator.getMessage("label.due_date"), checkoutDTO.getDueDate());
+		fieldMap.put(MessageTranslator.getMessage("label.daily.rental.charge"), "$"+checkoutDTO.getDailyCharge());
 		
-		fieldMap.put(messageSource.getMessage("label.charge_days", null, null), checkoutDTO.getChargeDay());
-		fieldMap.put(messageSource.getMessage("label.prediscount.charge", null, null), checkoutDTO.getPreDiscountCharge());
-		fieldMap.put(messageSource.getMessage("label.discount.percent", null, null), checkoutDTO.getDiscountPer()+"%");
-		fieldMap.put(messageSource.getMessage("label.discount.amount", null, null), checkoutDTO.getDiscountAmount());
-		fieldMap.put(messageSource.getMessage("label.final.charge", null, null), checkoutDTO.getFinalCharge());
+		fieldMap.put(MessageTranslator.getMessage("label.charge_days"), checkoutDTO.getChargeDay());
+		fieldMap.put(MessageTranslator.getMessage("label.prediscount.charge"), checkoutDTO.getPreDiscountCharge());
+		fieldMap.put(MessageTranslator.getMessage("label.discount.percent"), checkoutDTO.getDiscountPer()+"%");
+		fieldMap.put(MessageTranslator.getMessage("label.discount.amount"), checkoutDTO.getDiscountAmount());
+		fieldMap.put(MessageTranslator.getMessage("label.final.charge"), checkoutDTO.getFinalCharge());
 		
 		return fieldMap;
 	}

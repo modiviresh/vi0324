@@ -3,11 +3,14 @@ package com.os.toolrentalmanagement.service.Impl;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.os.toolrentalmanagement.constant.AppConstant;
 import com.os.toolrentalmanagement.dto.CheckoutDTO;
+import com.os.toolrentalmanagement.exception.BusinessErrorCodes;
+import com.os.toolrentalmanagement.exception.Precondition;
 import com.os.toolrentalmanagement.model.ToolChargeDetail;
 import com.os.toolrentalmanagement.model.ToolDetail;
 import com.os.toolrentalmanagement.model.ToolType;
@@ -32,6 +35,8 @@ public class ToolRentalServiceImpl implements ToolRentalService, NoChargeDay{
 	
 	@Override
 	public ToolDetail getToolDetails(String toolCode) {
+		Optional<ToolDetail> toolDetailOptional = toolDetailRepository.findByToolCode(toolCode);
+		Precondition.check(toolDetailOptional.isPresent(), BusinessErrorCodes.TOOL_DETAILS_NOT_FOUND, null);
 		return toolDetailRepository.findByToolCode(toolCode).get();
 	}
 
@@ -67,7 +72,9 @@ public class ToolRentalServiceImpl implements ToolRentalService, NoChargeDay{
 
 	@Override
 	public ToolChargeDetail getToolRentalDetails(ToolType toolType) {
-		return toolChargeDetailRepository.findChargeByToolType(toolType).get();
+		Optional<ToolChargeDetail> toolChargeOptional = toolChargeDetailRepository.findChargeByToolType(toolType);
+		Precondition.check(toolChargeOptional.isPresent(), BusinessErrorCodes.TOOL_CHARGE_NOT_FOUND, null);
+		return toolChargeOptional.get();
 	}
 
 	@Override
