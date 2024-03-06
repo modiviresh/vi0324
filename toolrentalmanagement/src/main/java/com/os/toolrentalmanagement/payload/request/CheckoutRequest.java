@@ -1,18 +1,22 @@
 package com.os.toolrentalmanagement.payload.request;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CheckoutRequest {
 
 	@NotBlank(message = "{error.toolCode.empty}")

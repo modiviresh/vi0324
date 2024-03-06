@@ -13,7 +13,7 @@ public interface ToolRentalService {
 
 	ToolChargeDetail getToolRentalDetails(ToolType toolType);
 
-	void calculateCheckoutAmount(CheckoutRequest checkoutRequest);
+	CheckoutDTO calculateCheckoutAmount(CheckoutRequest checkoutRequest);
 
 	void generateReport(ReportTypes reportType, CheckoutDTO checkoutDTO);
 }

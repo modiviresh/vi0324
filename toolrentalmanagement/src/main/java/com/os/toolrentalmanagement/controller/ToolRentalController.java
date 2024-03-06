@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.os.toolrentalmanagement.dto.CheckoutDTO;
 import com.os.toolrentalmanagement.payload.request.CheckoutRequest;
 import com.os.toolrentalmanagement.service.ToolRentalService;
 
@@ -19,7 +20,7 @@ public class ToolRentalController {
 	private final ToolRentalService toolRentalService;
 	
 	@PostMapping("/calculatecheckout")
-	public void calculateCheckoutAmount(@Valid @RequestBody CheckoutRequest checkoutRequest) {
-		toolRentalService.calculateCheckoutAmount(checkoutRequest);
+	public CheckoutDTO calculateCheckoutAmount(@Valid @RequestBody CheckoutRequest checkoutRequest) {
+		return toolRentalService.calculateCheckoutAmount(checkoutRequest);
 	}
 }

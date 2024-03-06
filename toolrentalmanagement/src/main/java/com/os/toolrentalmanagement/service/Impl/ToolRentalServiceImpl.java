@@ -41,7 +41,7 @@ public class ToolRentalServiceImpl implements ToolRentalService, NoChargeDay{
 	}
 
 	@Override
-	public void calculateCheckoutAmount(CheckoutRequest checkoutRequest) {
+	public CheckoutDTO calculateCheckoutAmount(CheckoutRequest checkoutRequest) {
 		ToolDetail toolDetail = getToolDetails(checkoutRequest.getToolCode());
 		ToolChargeDetail toolChargeDetail = getToolRentalDetails(toolDetail.getToolType());
 		Integer weekendDays = 0;
@@ -62,6 +62,7 @@ public class ToolRentalServiceImpl implements ToolRentalService, NoChargeDay{
 												.discountPer(checkoutRequest.getDiscountPer())
 												.build();
 		generateReport(ReportTypes.CONSOLE, checkoutDTO);
+		return checkoutDTO;
 	}
 
 	@Override
