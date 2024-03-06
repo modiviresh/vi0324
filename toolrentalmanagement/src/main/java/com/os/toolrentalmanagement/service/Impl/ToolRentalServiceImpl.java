@@ -1,6 +1,7 @@
 package com.os.toolrentalmanagement.service.Impl;
 
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import com.os.toolrentalmanagement.service.NoChargeDay;
 import com.os.toolrentalmanagement.service.ReportFacade;
 import com.os.toolrentalmanagement.service.ReportFacade.ReportTypes;
 import com.os.toolrentalmanagement.service.ToolRentalService;
+import com.os.toolrentalmanagement.utils.DateUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -42,17 +44,21 @@ public class ToolRentalServiceImpl implements ToolRentalService, NoChargeDay{
 	public void calculateCheckoutAmount(CheckoutRequest checkoutRequest) {
 		ToolDetail toolDetail = getToolDetails(checkoutRequest.getToolCode());
 		ToolChargeDetail toolChargeDetail = getToolRentalDetails(toolDetail.getToolType());
+		Integer weekendDays = 0;
+		Integer holidayCount= 0;
 		if(toolChargeDetail.getWeekendCharge()== AppConstant.NUM_ZERO && isFallInWeekend(checkoutRequest.getCheckoutDate(), checkoutRequest.getRentalDay())) {
-
+			weekendDays = DateUtil.calculateWeekendDays(checkoutRequest.getCheckoutDate(), checkoutRequest.getRentalDay());
 		}
 		if(toolChargeDetail.getHolidayCharge()==AppConstant.NUM_ZERO && isFallInHoliday(checkoutRequest.getCheckoutDate(), checkoutRequest.getRentalDay())) {
-
+			holidayCount = DateUtil.calculateHolidays(checkoutRequest.getCheckoutDate(), checkoutRequest.getRentalDay());
 		}
 		CheckoutDTO checkoutDTO = CheckoutDTO.builder()
 												.toolDetail(toolDetail)
 												.checkoutDate(checkoutRequest.getCheckoutDate())
 												.dailyCharge(toolChargeDetail.getDailyCharge())
 												.rentalDay(checkoutRequest.getRentalDay())
+												.weekendDay(weekendDays)
+												.holidayCount(holidayCount)
 												.discountPer(checkoutRequest.getDiscountPer())
 												.build();
 		generateReport(ReportTypes.CONSOLE, checkoutDTO);
@@ -64,12 +70,24 @@ public class ToolRentalServiceImpl implements ToolRentalService, NoChargeDay{
 	}
 
 	@Override
-	public boolean isFallInHoliday(LocalDate checkoutDate, Integer rentalDay) {
+	public boolean isFallInHoliday(final LocalDate checkoutDate, Integer rentalDay) {
+		LocalDate dueDate = checkoutDate.plusDays(rentalDay);
+		LocalDate independenceDate = DateUtil.IndependenceDayObserved(checkoutDate);
+		LocalDate labourDate = DateUtil.findLabourDate(checkoutDate);
+		if(independenceDate.isBefore(dueDate) && independenceDate.isAfter(checkoutDate)) {
+			return true;
+		} else if(labourDate.isBefore(dueDate) && labourDate.isAfter(checkoutDate)) {
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean isFallInWeekend(LocalDate checkoutDate, Integer rentalDay) {
+		final DayOfWeek startW = checkoutDate.getDayOfWeek();
+		if((startW.getValue()+rentalDay)>6) {
+			return true;
+		}
 		return false;
 	}
 

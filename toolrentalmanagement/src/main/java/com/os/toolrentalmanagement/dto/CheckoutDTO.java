@@ -21,10 +21,14 @@ public class CheckoutDTO {
 	
 	private Integer rentalDay;
 
+	private Integer weekendDay;
+
+	private Integer holidayCount;
+
 	private Integer discountPer;
-	//TODO: Need to calculate
+
 	private LocalDate dueDate;
-	//TODO: Need to calculate
+	
 	private Integer chargeDay;
 	
 	private Float preDiscountCharge;
@@ -33,6 +37,19 @@ public class CheckoutDTO {
 
 	private Float finalCharge;
 	
+	public LocalDate getDueDate() {
+		dueDate = checkoutDate.plusDays(rentalDay);
+		return dueDate;
+	}
+	
+	public Integer getChargeDay() {
+		chargeDay = rentalDay-weekendDay-holidayCount;
+		if(chargeDay<0) {
+			chargeDay=0;
+		}
+		return chargeDay;
+	}
+
 	public Float getPreDiscountCharge() {
 		this.preDiscountCharge = chargeDay * dailyCharge;
 		return preDiscountCharge;
@@ -47,5 +64,5 @@ public class CheckoutDTO {
 		this.finalCharge = preDiscountCharge-discountAmount;
 		return this.finalCharge;
 	}
-	
+
 }
